@@ -1267,7 +1267,7 @@ footer {
         };
 
 CKEDITOR.replace('editor', {
-    extraPlugins: 'insertYouTube,insertEquation,pastefromword',
+    extraPlugins: 'insertDocument,insertYouTube,insertEquation,pastefromword',
     removePlugins: 'clipboard',
     allowedContent: true,
     height: '80vh',
@@ -1279,7 +1279,7 @@ CKEDITOR.replace('editor', {
         { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'] },
         {
             name: 'insert',
-            items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar', 'Link', 'Unlink', 'Anchor', 'InsertYouTube', 'InsertEquation']
+            items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar', 'Link', 'Unlink', 'Anchor', 'InsertYouTube', 'InsertEquation', 'InsertDocument']
         },
         { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize'] },
         { name: 'colors', items: ['TextColor', 'BGColor'] },
@@ -1327,7 +1327,29 @@ CKEDITOR.plugins.add('insertYouTube', {
         });
     }
 });
+CKEDITOR.plugins.add('insertDocument', {
+        init: function (editor) {
+            
+           editor.ui.addButton('InsertDocument', {
+                label: 'Hướng dẫn sử dụng công cụ',
+                command: 'downloadPdf',
+                toolbar: 'insert',
+                icon: 'https://cdn-icons-png.flaticon.com/512/337/337946.png' 
+            });
 
+            editor.addCommand('downloadPdf', {
+                exec: function () {
+                    const pdfUrl = 'https://hoctructuyencntt.github.io/HTMLConvert/Guide.pdf'; // Thay bằng link thực
+                    const link = document.createElement('a');
+                    link.href = pdfUrl;
+                    link.download = ''; // để trình duyệt xử lý tên file
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            });
+        }
+    });
 
        /* function loadTemplate() {
             const selectedTemplate = document.getElementById('template-select').value;
