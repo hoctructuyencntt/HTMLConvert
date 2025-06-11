@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Convert</title>
+    <style>
+        :root {
+            --accent-color: #0071e3;
+            --text-color: #1d1d1f;
+            --bg-color: #f5f5f7;
+            --toolbar-bg: #ffffff;
+            --button-bg: #0071e3;
+            --button-hover: #005bb5;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .toolbar {
+            padding: 1rem;
+            background-color: var(--toolbar-bg);
+            border-bottom: 1px solid #d2d2d7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .editor-container {
+            flex: 1;
+            padding: 1rem;
+            background: white;
+            overflow: auto;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.03);
+        }
+
+        .toolbar select, .toolbar button {
+            padding: 0.5rem 1rem;
+            font-size: 0.95rem;
+            border-radius: 20px;
+            border: 1px solid #d2d2d7;
+            background-color: var(--button-bg);
+            color: white;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .toolbar button:hover {
+            background-color: var(--button-hover);
+        }
+
+        .toolbar select {
+            background-color: #fff;
+            color: var(--text-color);
+        }
+
+        textarea#editor {
+            width: 100%;
+            height: 100%;
+            border: none;
+            resize: none;
+            font-size: 16px;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .footer {
+            background-color: #1d1d1f;
+            color: #f5f5f7;
+            padding: 2rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-columns {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .footer-column {
+            flex: 1 1 200px;
+            margin: 1rem;
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            color: #f5f5f7;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column ul li a {
+            color: #a1a1a6;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ffffff;
+        }
+
+        .footer-note {
+            text-align: center;
+            border-top: 1px solid #3a3a3c;
+            padding-top: 1rem;
+            font-size: 0.8rem;
+            color: #a1a1a6;
+        }
+
+        @media (max-width: 768px) {
+            .toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .toolbar button, .toolbar select {
+                margin: 0.3rem 0;
+            }
+        }
+.toolbar {
+    position: relative;
+    padding: 1rem;
+    background-color: var(--toolbar-bg);
+    border-bottom: 1px solid #d2d2d7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    min-height: 70px;
+}
+
+.toolbar h2 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-color);
+}
+.editor-container {
+    flex: 1;
+    padding: 2rem max(5%, 2rem);
+    background: white;
+    overflow: auto;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.03);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+    color: #1d1d1f;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.editor-container p {
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+}
+
+.editor-container h1, .editor-container h2, .editor-container h3 {
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+    color: #000;
+}
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="toolbar">
+	<h2>CÔNG CỤ HTML CONVERT</h2>
+    </div>
+    <div class="editor-container">
+        <p>Công cụ cho phép chuyển đổi các nội dung như văn bản, công thức, hình ảnh từ một tài liệu Word thành tài liệu định dạng web tĩnh (HTML) một cách nhanh chóng. Các nội dung trực quan như video (định dạng mp4 hay lưu trữ từ Youtube), ảnh động (gif) có thể được chèn vào và hiển thị một cách sinh động trong tài liệu định dạng web tĩnh (HTML).</p>
+    </div>
+</div>
+<footer class="footer">
+    <div class="footer-columns">
+        <div class="footer-column">
+            <h4>Thông tin</h4>
+            <ul>
+                <li><a href="muctieu.html">Mục tiêu</a></li>
+                <li><a href="congnghe.html">Tổng quan</a></li>
+                <li><a href="index.html">Công cụ</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Chức năng</h4>
+            <ul>
+                <li><a href="load.html">Load Template</a></li>
+                <li><a href="export.html">Export to HTML</a></li>
+                <li><a href="upload.html">Upload Your Files</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Liên hệ</h4>
+            <ul>
+                <li><a href="https://hoctructuyencntt.github.io/lienhe.html">Email</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-note">&copy; 2025 HTML Convert Tool.</div>
+</footer>
+</body>
+</html>

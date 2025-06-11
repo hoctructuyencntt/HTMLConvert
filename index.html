@@ -5,95 +5,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML Convert</title>
     <link rel="stylesheet" href="https://cdn.ckeditor.com/4.16.0/full-all/contents.css">
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        .toolbar {
-            padding: 10px;
-            background: #f4f4f4;
-            border-bottom: 1px solid #ccc;
-            display: flex;
-            justify-content: space-between;
-        }
-        .editor-container {
-            flex: 1;
-            padding: 10px;
-        }
-        .export-button, .template-select {
-            padding: 10px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .template-select {
-            margin-right: 10px;
-        }
-        .vertical-nav {
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            width: 200px;
-            height: 100vh;
-            position: fixed;
-        }
-        .vertical-nav a {
-            display: block;
-            color: white;
-            padding: 10px;
-            text-decoration: none;
-        }
-        .vertical-nav a:hover {
-            background-color: #575757;
-        }
-        header {
-            background-color: #f4f4f4;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #ccc;
-            margin-left: 200px;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: calc(100% - 200px);
-            margin-left: 200px;
-        }
-        .main-content {
-            display: flex;
-            margin-left: 200px;
-            padding: 20px;
-        }
-        .content {
-            flex: 1;
-            padding: 20px;
-        }
-        .sidebar {
-            background-color: #f4f4f4;
-            padding: 20px;
-            width: 250px;
-            border-left: 1px solid #ccc;
-        }
+  <style>
+    :root {
+      --accent-color: #0071e3;
+      --text-color: #1d1d1f;
+      --bg-color: #f5f5f7;
+      --toolbar-bg: #ffffff;
+      --button-bg: #0071e3;
+      --button-hover: #005bb5;
+      --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-   .cke_button__insertequation_icon {
-        background-image: url('equation.png') !important;
-        background-size: 16px 16px !important;
-        background-repeat: no-repeat !important;
-        background-position: center center !important;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: var(--font-main);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .toolbar {
+      padding: 1rem;
+      background-color: var(--toolbar-bg);
+      border-bottom: 1px solid #d2d2d7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .editor-container {
+      flex: 1;
+      padding: 1rem;
+      background: white;
+      overflow: auto;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.03);
+    }
+
+    .toolbar select, .toolbar button {
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      border-radius: 20px;
+      border: 1px solid #d2d2d7;
+      background-color: var(--button-bg);
+      color: white;
+      cursor: pointer;
+      margin-left: 0.5rem;
+      transition: background-color 0.2s;
+    }
+
+    .toolbar button:hover {
+      background-color: var(--button-hover);
+    }
+
+    .toolbar select {
+      background-color: #fff;
+      color: var(--text-color);
+    }
+
+    textarea#editor {
+      width: 100%;
+      height: 100%;
+      border: none;
+      resize: none;
+      font-size: 16px;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+.footer {
+  background-color: #1d1d1f;
+  color: #f5f5f7;
+  padding: 2rem 1rem;
+  font-size: 0.9rem;
 }
-    </style>
+
+.footer-columns {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.footer-column {
+  flex: 1 1 200px;
+  margin: 1rem;
+}
+
+.footer-column h4 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: #f5f5f7;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-column ul li a {
+  color: #a1a1a6;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-column ul li a:hover {
+  color: #ffffff;
+}
+
+.footer-note {
+  text-align: center;
+  border-top: 1px solid #3a3a3c;
+  padding-top: 1rem;
+  font-size: 0.8rem;
+  color: #a1a1a6;
+}
+
+    @media (max-width: 768px) {
+      .toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .toolbar button, .toolbar select {
+        margin: 0.3rem 0;
+      }
+    }
+.cke_button__insertequation_icon {
+    background-image: url('equation.png') !important;
+    background-size: 16px 16px !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+}
+
+  </style>
 </head>
 <body>
     <div class="container">
@@ -105,13 +161,15 @@
     <option value="vertical-nav">Pro Template</option>
   
 </select>
-<input type="file" id="upload-file" accept=".html" style="display:none;" onchange="handleFileUpload(event)">
+<input type="file" id="upload-file" accept=".docx,.html,.pdf" style="display:none;" onchange="handleFileUpload(event)">
+
+
 
                 <button class="export-button" onclick="loadTemplate()">Load Template</button>
             </div>
 <button id="download-button" class="export-button" onclick="downloadFile()" style="display:none;">Download Script</button>
     <button class="export-button" onclick="exportToHTML()">Export to HTML</button>
-<button class="export-button" onclick="triggerFileInput()">Upload Your HTML Template</button>
+<button class="export-button" onclick="triggerFileInput()">Upload Your Files (HTML,DOCX)</button>
 <input type="file" id="upload-file" accept=".html" style="display:none;" onchange="handleFileUpload(event)">
 
         </div>
@@ -119,6 +177,33 @@
             <textarea id="editor"></textarea>
         </div>
     </div>
+<footer class="footer">
+    <div class="footer-columns">
+        <div class="footer-column">
+            <h4>Thông tin</h4>
+            <ul>
+                <li><a href="muctieu.html">Mục tiêu</a></li>
+                <li><a href="congnghe.html">Tổng quan</a></li>
+                <li><a href="index.html">Công cụ</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Chức năng</h4>
+            <ul>
+                <li><a href="load.html">Load Template</a></li>
+                <li><a href="export.html">Export to HTML</a></li>
+                <li><a href="upload.html">Upload Your Files</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Liên hệ</h4>
+            <ul>
+                <li><a href="https://hoctructuyencntt.github.io/lienhe.html">Email</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-note">&copy; 2025 HTML Convert Tool.</div>
+</footer>
 
     <script src="https://cdn.ckeditor.com/4.16.0/full-all/ckeditor.js"></script>
     <script>
@@ -319,215 +404,249 @@ input[type="checkbox"]:checked + label + ul {
   <ul class="section">
     <li>
       <input type="checkbox" id="ch1-sec1" hidden checked>
-      <label for="ch1-sec1">1.1</label>
+      <label for="ch1-sec1"><a href='#1.1'>1.1. Section</a></label>
       <ul class="subsection">
-        <li>1.1.1</li>
-        <li>1.1.2</li>
-        <li>1.1.3</li>
+        <li><a href='#1.1.1'>1.1.1. Subsection </a></li>
+        <li><a href='#1.1.2'>1.1.2. Subsection </a></li>
+        <li><a href='#1.1.3'>1.1.3. Subsection </a></li>
       </ul>
     </li>
         <li>
-      <input type="checkbox" id="ch1-sec2" hidden checked>
-      <label for="ch1-sec2">1.2</label>
-      <ul class="subsection">
-        <li>1.2.1</li>
-        <li>1.2.2</li>
-        <li>1.2.3</li>
-      </ul>
-    </li>
- <li>
-      <input type="checkbox" id="ch1-sec3" hidden checked>
-      <label for="ch1-sec3">1.3</label>
-      <ul class="subsection">
-        <li>1.3.1</li>
-        <li>1.3.2</li>
-        <li>1.3.3</li>
+  <input type="checkbox" id="ch1-sec2" hidden checked>
+  <label for="ch1-sec2"><a href="#1.2">1.2. Section</a></label>
+  <ul class="subsection">
+    <li><a href="#1.2.1">1.2.1. Subsection </a></li>
+    <li><a href="#1.2.2">1.2.2. Subsection </a></li>
+    <li><a href="#1.2.3">1.2.3. Subsection </a></li>
+  </ul>
+</li>
+
+<li>
+  <input type="checkbox" id="ch1-sec3" hidden checked>
+  <label for="ch1-sec3"><a href="#1.3">1.3. Section</a></label>
+  <ul class="subsection">
+    <li><a href="#1.3.1">1.3.1. Subsection </a></li>
+    <li><a href="#1.3.2">1.3.2. Subsection </a></li>
+    <li><a href="#1.3.3">1.3.3. Subsection </a></li>
+  </ul>
+</li>
+
+<li>
+  <input type="checkbox" id="ch1-sec4" hidden checked>
+  <label for="ch1-sec4"><a href="#1.4">1.4. Section</a></label>
+  <ul class="subsection">
+    <li><a href="#1.4.1">1.4.1. Subsection </a></li>
+    <li><a href="#1.4.2">1.4.2. Subsection </a></li>
+    <li><a href="#1.4.3">1.4.3. Subsection </a></li>
+  </ul>
+</li>
+
+<li>
+  <input type="checkbox" id="ch1-sec5" hidden checked>
+  <label for="ch1-sec5"><a href="#1.5">1.5. Section</a></label>
+  <ul class="subsection">
+    <li><a href="#1.5.1">1.5.1. Subsection</a></li>
+    <li><a href="#1.5.2">1.5.2. Subsection </a></li>
+    <li><a href="#1.5.3">1.5.3. Subsection </a></li>
+  </ul>
+</li>
+
+<li>
+  <input type="checkbox" id="ch1-sec6" hidden checked>
+  <label for="ch1-sec6"><a href="#1.6">1.6. Section</a></label>
+  <ul class="subsection">
+    <li><a href="#1.6.1">1.6.1. Subsection </a></li>
+    <li><a href="#1.6.2">1.6.2. Subsection </a></li>
+    <li><a href="#1.6.3">1.6.3. Subsection </a></li>
+  </ul>
+</li>
+
       </ul>
     </li>
 <li>
-      <input type="checkbox" id="ch1-sec4" hidden checked>
-      <label for="ch1-sec4">1.4</label>
-      <ul class="subsection">
-        <li>1.4.1</li>
-        <li>1.4.2</li>
-        <li>1.4.3</li>
-      </ul>
-    </li>
-<li>
-      <input type="checkbox" id="ch1-sec5" hidden checked>
-      <label for="ch1-sec5">1.5</label>
-      <ul class="subsection">
-        <li>1.5.1</li>
-        <li>1.5.2</li>
-        <li>1.5.3</li>
-      </ul>
-    </li>
-<li>
-      <input type="checkbox" id="ch1-sec6" hidden checked>
-      <label for="ch1-sec6">1.6</label>
-      <ul class="subsection">
-        <li>1.6.1</li>
-        <li>1.6.2</li>
-        <li>1.6.3</li>
-      </ul>
-    </li>
-      </ul>
-    </li>
-<li>
-   <input type="checkbox" id="ch2-toggle" hidden checked>
+  <input type="checkbox" id="ch2-toggle" hidden checked>
   <label for="ch2-toggle">Chapter 02</label>
   <ul class="section">
     <li>
       <input type="checkbox" id="ch2-sec1" hidden checked>
-      <label for="ch2-sec1">2.1</label>
+      <label for="ch2-sec1"><a href="#2.1">2.1. Section</a></label>
       <ul class="subsection">
-        <li>2.1.1</li>
-        <li>2.1.2</li>
-        <li>2.1.3</li>
+        <li><a href="#2.1.1">2.1.1. Subsection</a></li>
+        <li><a href="#2.1.2">2.1.2. Subsection</a></li>
+        <li><a href="#2.1.3">2.1.3. Subsection</a></li>
       </ul>
     </li>
-        <li>
+    <li>
       <input type="checkbox" id="ch2-sec2" hidden checked>
-      <label for="ch1-sec2">2.2</label>
+      <label for="ch2-sec2"><a href="#2.2">2.2. Section</a></label>
       <ul class="subsection">
-        <li>2.2.1</li>
-        <li>2.2.2</li>
-        <li>2.2.3</li>
+        <li><a href="#2.2.1">2.2.1. Subsection</a></li>
+        <li><a href="#2.2.2">2.2.2. Subsection</a></li>
+        <li><a href="#2.2.3">2.2.3. Subsection</a></li>
       </ul>
     </li>
- <li>
+    <li>
       <input type="checkbox" id="ch2-sec3" hidden checked>
-      <label for="ch1-sec3">2.3</label>
+      <label for="ch2-sec3"><a href="#2.3">2.3. Section</a></label>
       <ul class="subsection">
-        <li>2.3.1</li>
-        <li>2.3.2</li>
-        <li>2.3.3</li>
+        <li><a href="#2.3.1">2.3.1. Subsection</a></li>
+        <li><a href="#2.3.2">2.3.2. Subsection</a></li>
+        <li><a href="#2.3.3">2.3.3. Subsection</a></li>
       </ul>
     </li>
-<li>
+    <li>
       <input type="checkbox" id="ch2-sec4" hidden checked>
-      <label for="ch1-sec4">2.4</label>
+      <label for="ch2-sec4"><a href="#2.4">2.4. Section</a></label>
       <ul class="subsection">
-        <li>2.4.1</li>
-        <li>2.4.2</li>
-        <li>2.4.3</li>
+        <li><a href="#2.4.1">2.4.1. Subsection</a></li>
+        <li><a href="#2.4.2">2.4.2. Subsection</a></li>
+        <li><a href="#2.4.3">2.4.3. Subsection</a></li>
       </ul>
     </li>
-<li>
+    <li>
       <input type="checkbox" id="ch2-sec5" hidden checked>
-      <label for="ch1-sec5">2.5</label>
+      <label for="ch2-sec5"><a href="#2.5">2.5. Section</a></label>
       <ul class="subsection">
-        <li>2.5.1</li>
-        <li>2.5.2</li>
-        <li>2.5.3</li>
+        <li><a href="#2.5.1">2.5.1. Subsection</a></li>
+        <li><a href="#2.5.2">2.5.2. Subsection</a></li>
+        <li><a href="#2.5.3">2.5.3. Subsection</a></li>
       </ul>
     </li>
-<li>
+    <li>
       <input type="checkbox" id="ch2-sec6" hidden checked>
-      <label for="ch1-sec6">2.6</label>
+      <label for="ch2-sec6"><a href="#2.6">2.6. Section</a></label>
       <ul class="subsection">
-        <li>2.6.1</li>
-        <li>2.6.2</li>
-        <li>2.6.3</li>
+        <li><a href="#2.6.1">2.6.1. Subsection</a></li>
+        <li><a href="#2.6.2">2.6.2. Subsection</a></li>
+        <li><a href="#2.6.3">2.6.3. Subsection</a></li>
       </ul>
     </li>
-      </ul>
-    </li>
-
+  </ul>
+</li>
 <li>
-      <input type="checkbox" id="ch3-toggle" hidden checked>
+  <input type="checkbox" id="ch3-toggle" hidden checked>
   <label for="ch3-toggle">Chapter 03</label>
   <ul class="section">
     <li>
-      <input type="checkbox" id="ch3-sec3" hidden checked>
-      <label for="ch3-sec3">3.1</label>
+      <input type="checkbox" id="ch3-sec1" hidden checked>
+      <label for="ch3-sec1"><a href="#3.1">3.1. Section</a></label>
       <ul class="subsection">
-        <li>3.1.1</li>
-        <li>3.1.2</li>
-        <li>3.1.3</li>
+        <li><a href="#3.1.1">3.1.1. Subsection</a></li>
+        <li><a href="#3.1.2">3.1.2. Subsection</a></li>
+        <li><a href="#3.1.3">3.1.3. Subsection</a></li>
       </ul>
     </li>
-        <li>
+    <li>
       <input type="checkbox" id="ch3-sec2" hidden checked>
-      <label for="ch3-sec2">3.2</label>
+      <label for="ch3-sec2"><a href="#3.2">3.2. Section</a></label>
       <ul class="subsection">
-        <li>3.2.1</li>
-        <li>3.2.2</li>
-        <li>3.2.3</li>
+        <li><a href="#3.2.1">3.2.1. Subsection</a></li>
+        <li><a href="#3.2.2">3.2.2. Subsection</a></li>
+        <li><a href="#3.2.3">3.2.3. Subsection</a></li>
       </ul>
     </li>
- <li>
+    <li>
       <input type="checkbox" id="ch3-sec3" hidden checked>
-      <label for="ch3-sec3">3.3</label>
+      <label for="ch3-sec3"><a href="#3.3">3.3. Section</a></label>
       <ul class="subsection">
-        <li>3.3.1</li>
-        <li>3.3.2</li>
-        <li>3.3.3</li>
+        <li><a href="#3.3.1">3.3.1. Subsection</a></li>
+        <li><a href="#3.3.2">3.3.2. Subsection</a></li>
+        <li><a href="#3.3.3">3.3.3. Subsection</a></li>
       </ul>
     </li>
-<li>
+    <li>
       <input type="checkbox" id="ch3-sec4" hidden checked>
-      <label for="ch3-sec4">3.4</label>
+      <label for="ch3-sec4"><a href="#3.4">3.4. Section</a></label>
       <ul class="subsection">
-        <li>3.4.1</li>
-        <li>3.4.2</li>
-        <li>3.4.3</li>
+        <li><a href="#3.4.1">3.4.1. Subsection</a></li>
+        <li><a href="#3.4.2">3.4.2. Subsection</a></li>
+        <li><a href="#3.4.3">3.4.3. Subsection</a></li>
       </ul>
     </li>
-<li>
+    <li>
       <input type="checkbox" id="ch3-sec5" hidden checked>
-      <label for="ch3-sec5">3.5</label>
+      <label for="ch3-sec5"><a href="#3.5">3.5. Section</a></label>
       <ul class="subsection">
-        <li>3.5.1</li>
-        <li>3.5.2</li>
-        <li>3.5.3</li>
+        <li><a href="#3.5.1">3.5.1. Subsection</a></li>
+        <li><a href="#3.5.2">3.5.2. Subsection</a></li>
+        <li><a href="#3.5.3">3.5.3. Subsection</a></li>
       </ul>
     </li>
-
-<li>
+    <li>
       <input type="checkbox" id="ch3-sec6" hidden checked>
-      <label for="ch3-sec6">3.6</label>
+      <label for="ch3-sec6"><a href="#3.6">3.6. Section</a></label>
       <ul class="subsection">
-        <li>3.6.1</li>
-        <li>3.6.2</li>
-        <li>3.6.3</li>
+        <li><a href="#3.6.1">3.6.1. Subsection</a></li>
+        <li><a href="#3.6.2">3.6.2. Subsection</a></li>
+        <li><a href="#3.6.3">3.6.3. Subsection</a></li>
       </ul>
     </li>
-      </ul>
-    </li>
+  </ul>
+</li>
+
+
 <li>
   <input type="checkbox" id="ch4-toggle" hidden checked>
   <label for="ch4-toggle">Chapter 04</label>
   <ul class="section">
     <li>
       <input type="checkbox" id="ch4-sec1" hidden checked>
-      <label for="ch4-sec1">4.1</label>
+      <label for="ch4-sec1"><a href="#4.1">4.1. Section</a></label>
       <ul class="subsection">
-        <li>4.1.1</li>
-        <li>4.1.2</li>
-        <li>4.1.3</li>
+        <li><a href="#4.1.1">4.1.1. Subsection</a></li>
+        <li><a href="#4.1.2">4.1.2. Subsection</a></li>
+        <li><a href="#4.1.3">4.1.3. Subsection</a></li>
       </ul>
     </li>
     <li>
       <input type="checkbox" id="ch4-sec2" hidden checked>
-      <label for="ch4-sec2">4.2</label>
+      <label for="ch4-sec2"><a href="#4.2">4.2. Section</a></label>
       <ul class="subsection">
-        <li>4.2.1</li>
-        <li>4.2.2</li>
-        <li>4.2.3</li>
+        <li><a href="#4.2.1">4.2.1. Subsection</a></li>
+        <li><a href="#4.2.2">4.2.2. Subsection</a></li>
+        <li><a href="#4.2.3">4.2.3. Subsection</a></li>
       </ul>
     </li>
     <li>
       <input type="checkbox" id="ch4-sec3" hidden checked>
-      <label for="ch4-sec3">4.3</label>
+      <label for="ch4-sec3"><a href="#4.3">4.3. Section</a></label>
       <ul class="subsection">
-        <li>4.3.1</li>
-        <li>4.3.2</li>
-        <li>4.3.3</li>
+        <li><a href="#4.3.1">4.3.1. Subsection</a></li>
+        <li><a href="#4.3.2">4.3.2. Subsection</a></li>
+        <li><a href="#4.3.3">4.3.3. Subsection</a></li>
+      </ul>
+    </li>
+    <li>
+      <input type="checkbox" id="ch4-sec4" hidden checked>
+      <label for="ch4-sec4"><a href="#4.4">4.4. Section</a></label>
+      <ul class="subsection">
+        <li><a href="#4.4.1">4.4.1. Subsection</a></li>
+        <li><a href="#4.4.2">4.4.2. Subsection</a></li>
+        <li><a href="#4.4.3">4.4.3. Subsection</a></li>
+      </ul>
+    </li>
+    <li>
+      <input type="checkbox" id="ch4-sec5" hidden checked>
+      <label for="ch4-sec5"><a href="#4.5">4.5. Section</a></label>
+      <ul class="subsection">
+        <li><a href="#4.5.1">4.5.1. Subsection</a></li>
+        <li><a href="#4.5.2">4.5.2. Subsection</a></li>
+        <li><a href="#4.5.3">4.5.3. Subsection</a></li>
+      </ul>
+    </li>
+    <li>
+      <input type="checkbox" id="ch4-sec6" hidden checked>
+      <label for="ch4-sec6"><a href="#4.6">4.6. Section</a></label>
+      <ul class="subsection">
+        <li><a href="#4.6.1">4.6.1. Subsection</a></li>
+        <li><a href="#4.6.2">4.6.2. Subsection</a></li>
+        <li><a href="#4.6.3">4.6.3. Subsection</a></li>
       </ul>
     </li>
   </ul>
 </li>
+
+
 
 <li>
   <input type="checkbox" id="ch5-toggle" hidden checked>
@@ -535,33 +654,62 @@ input[type="checkbox"]:checked + label + ul {
   <ul class="section">
     <li>
       <input type="checkbox" id="ch5-sec1" hidden checked>
-      <label for="ch5-sec1">5.1</label>
+      <label for="ch5-sec1"><a href="#5.1">5.1. Section</a></label>
       <ul class="subsection">
-        <li>5.1.1</li>
-        <li>5.1.2</li>
-        <li>5.1.3</li>
+        <li><a href="#5.1.1">5.1.1. Subsection</a></li>
+        <li><a href="#5.1.2">5.1.2. Subsection</a></li>
+        <li><a href="#5.1.3">5.1.3. Subsection</a></li>
       </ul>
     </li>
     <li>
       <input type="checkbox" id="ch5-sec2" hidden checked>
-      <label for="ch5-sec2">5.2</label>
+      <label for="ch5-sec2"><a href="#5.2">5.2. Section</a></label>
       <ul class="subsection">
-        <li>5.2.1</li>
-        <li>5.2.2</li>
-        <li>5.2.3</li>
+        <li><a href="#5.2.1">5.2.1. Subsection</a></li>
+        <li><a href="#5.2.2">5.2.2. Subsection</a></li>
+        <li><a href="#5.2.3">5.2.3. Subsection</a></li>
       </ul>
     </li>
     <li>
       <input type="checkbox" id="ch5-sec3" hidden checked>
-      <label for="ch5-sec3">5.3</label>
+      <label for="ch5-sec3"><a href="#5.3">5.3. Section</a></label>
       <ul class="subsection">
-        <li>5.3.1</li>
-        <li>5.3.2</li>
-        <li>5.3.3</li>
+        <li><a href="#5.3.1">5.3.1. Subsection</a></li>
+        <li><a href="#5.3.2">5.3.2. Subsection</a></li>
+        <li><a href="#5.3.3">5.3.3. Subsection</a></li>
+      </ul>
+    </li>
+    <li>
+      <input type="checkbox" id="ch5-sec4" hidden checked>
+      <label for="ch5-sec4"><a href="#5.4">5.4. Section</a></label>
+      <ul class="subsection">
+        <li><a href="#5.4.1">5.4.1. Subsection</a></li>
+        <li><a href="#5.4.2">5.4.2. Subsection</a></li>
+        <li><a href="#5.4.3">5.4.3. Subsection</a></li>
+      </ul>
+    </li>
+    <li>
+      <input type="checkbox" id="ch5-sec5" hidden checked>
+      <label for="ch5-sec5"><a href="#5.5">5.5. Section</a></label>
+      <ul class="subsection">
+        <li><a href="#5.5.1">5.5.1. Subsection</a></li>
+        <li><a href="#5.5.2">5.5.2. Subsection</a></li>
+        <li><a href="#5.5.3">5.5.3. Subsection</a></li>
+      </ul>
+    </li>
+    <li>
+      <input type="checkbox" id="ch5-sec6" hidden checked>
+      <label for="ch5-sec6"><a href="#5.6">5.6. Section</a></label>
+      <ul class="subsection">
+        <li><a href="#5.6.1">5.6.1. Subsection</a></li>
+        <li><a href="#5.6.2">5.6.2. Subsection</a></li>
+        <li><a href="#5.6.3">5.6.3. Subsection</a></li>
       </ul>
     </li>
   </ul>
 </li>
+
+
 
 <li>
   <input type="checkbox" id="ch6-toggle" hidden checked>
@@ -569,33 +717,61 @@ input[type="checkbox"]:checked + label + ul {
   <ul class="section">
     <li>
       <input type="checkbox" id="ch6-sec1" hidden checked>
-      <label for="ch6-sec1">6.1</label>
+      <label for="ch6-sec1"><a href="#6.1">6.1. Section</a></label>
       <ul class="subsection">
-        <li>6.1.1</li>
-        <li>6.1.2</li>
-        <li>6.1.3</li>
+        <li><a href="#6.1.1">6.1.1. Subsection</a></li>
+        <li><a href="#6.1.2">6.1.2. Subsection</a></li>
+        <li><a href="#6.1.3">6.1.3. Subsection</a></li>
       </ul>
     </li>
     <li>
       <input type="checkbox" id="ch6-sec2" hidden checked>
-      <label for="ch6-sec2">6.2</label>
+      <label for="ch6-sec2"><a href="#6.2">6.2. Section</a></label>
       <ul class="subsection">
-        <li>6.2.1</li>
-        <li>6.2.2</li>
-        <li>6.2.3</li>
+        <li><a href="#6.2.1">6.2.1. Subsection</a></li>
+        <li><a href="#6.2.2">6.2.2. Subsection</a></li>
+        <li><a href="#6.2.3">6.2.3. Subsection</a></li>
       </ul>
     </li>
     <li>
       <input type="checkbox" id="ch6-sec3" hidden checked>
-      <label for="ch6-sec3">6.3</label>
+      <label for="ch6-sec3"><a href="#6.3">6.3. Section</a></label>
       <ul class="subsection">
-        <li>6.3.1</li>
-        <li>6.3.2</li>
-        <li>6.3.3</li>
+        <li><a href="#6.3.1">6.3.1. Subsection</a></li>
+        <li><a href="#6.3.2">6.3.2. Subsection</a></li>
+        <li><a href="#6.3.3">6.3.3. Subsection</a></li>
+      </ul>
+    </li>
+    <li>
+      <input type="checkbox" id="ch6-sec4" hidden checked>
+      <label for="ch6-sec4"><a href="#6.4">6.4. Section</a></label>
+      <ul class="subsection">
+        <li><a href="#6.4.1">6.4.1. Subsection</a></li>
+        <li><a href="#6.4.2">6.4.2. Subsection</a></li>
+        <li><a href="#6.4.3">6.4.3. Subsection</a></li>
+      </ul>
+    </li>
+    <li>
+      <input type="checkbox" id="ch6-sec5" hidden checked>
+      <label for="ch6-sec5"><a href="#6.5">6.5. Section</a></label>
+      <ul class="subsection">
+        <li><a href="#6.5.1">6.5.1. Subsection</a></li>
+        <li><a href="#6.5.2">6.5.2. Subsection</a></li>
+        <li><a href="#6.5.3">6.5.3. Subsection</a></li>
+      </ul>
+    </li>
+    <li>
+      <input type="checkbox" id="ch6-sec6" hidden checked>
+      <label for="ch6-sec6"><a href="#6.6">6.6. Section</a></label>
+      <ul class="subsection">
+        <li><a href="#6.6.1">6.6.1. Subsection</a></li>
+        <li><a href="#6.6.2">6.6.2. Subsection</a></li>
+        <li><a href="#6.6.3">6.6.3. Subsection</a></li>
       </ul>
     </li>
   </ul>
 </li>
+
 
        
     </ul>
@@ -608,7 +784,7 @@ input[type="checkbox"]:checked + label + ul {
 </div>
 
 <!-- Nội dung chương -->
-<div id="chapter-text">
+<div id="chapter-text" id="chapter-content-display">
     <h2>Chapter 01</h2>
     <p>This is the content of Chapter 01. Replace with your real content.</p>
 </div>
@@ -664,94 +840,98 @@ header {
  
 }
 
-/* Sidebar */
 .sidebar {
-    width: 20%;
-    background: #f4f4f4;
+    width: 22%;
+    background: #ffffff;
     padding: 20px;
-    border-right: 2px solid #ddd;
-    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid #e0e0e0;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
     overflow-y: auto;
-    overflow-x: auto;
-    white-space: nowrap;
-
+    overflow-x: auto; /* Thanh cuộn ngang toàn bộ */
+    max-height: 100vh;
+    white-space: nowrap; /* Không cho xuống dòng các mục con */
 }
+
+/* Hủy bỏ overflow từng mục con */
+.sidebar label,
+.sidebar a {
+    overflow: visible;
+    white-space: nowrap;
+}
+
 
 .sidebar h2 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    color: #4CAF50;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #2e7d32;
+    border-bottom: 1px solid #c8e6c9;
+    padding-bottom: 5px;
+    white-space: nowrap;
 }
 
-/* Ẩn ul con mặc định */
-.sidebar ul ul {
-    display: none;
-}
-
-/* Khi checkbox được chọn → hiển thị ul con */
-.sidebar input[type="checkbox"]:checked + label + ul {
-    display: block;
-}
-
-/* Reset */
+/* Reset list */
 .sidebar ul {
     list-style: none;
     padding-left: 0;
-}
-
-.sidebar li {
-    margin: 4px 0;
+    margin: 0;
 }
 
 /* CHAPTER */
 .sidebar > ul > li > input + label {
-    background-color: #f9f9f9;
-    border-left: 4px solid #4CAF50;
-    padding: 8px 10px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #4CAF50;
     display: block;
-    width: max-content;
-    min-width: 100%;
-    white-space: nowrap;
-    cursor: pointer;
+    background: #f5f5f5;
+    border-left: 4px solid #66bb6a;
+    padding: 8px 12px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #2e7d32;
+    margin-bottom: 4px;
+    border-radius: 6px;
+
 }
 
 /* SECTION */
-.sidebar ul li ul > li > input + label {
-    background-color: #eee;
-    border-left: 4px solid #8BC34A;
-    padding: 6px 10px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #333;
-    margin-left: 10px;
+.sidebar ul li ul > li > label {
     display: block;
-    width: max-content;
-    min-width: 100%;
-    white-space: nowrap;
-    cursor: pointer;
+    background: #fafafa;
+    border-left: 4px solid #a5d6a7;
+    padding: 6px 20px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #333;
+    margin: 2px 0;
+  
 }
 
 /* SUBSECTION */
-.sidebar ul li ul li ul > li {
+.sidebar ul li ul li ul > li a {
     display: block;
-    padding: 3px 20px;
+    padding: 6px 35px;
+    font-size: 0.88rem;
+    color: #333;
     text-decoration: none;
-    color: #777;
-    font-size: 0.9rem;
-    white-space: nowrap;
+    border-left: 3px solid transparent;
+    
+    transition: background 0.2s;
 }
 
-.sidebar ul li ul li ul > li:hover {
-    background: #4CAF50;
-    color: white;
+.sidebar ul li ul li ul > li a:hover {
+    background: #c8e6c9;
+    color: #1b5e20;
+    border-left: 3px solid #66bb6a;
 }
 
-/* Hover effect chung cho label */
+/* Hover effect */
 .sidebar label:hover {
-    background-color: #ddd;
+    background-color: #f0f0f0;
+}
+
+/* Highlight active link */
+.sidebar ul li ul li ul > li a.active {
+    background: #66bb6a;
+    color: white;
+    font-weight: bold;
+    border-left: 3px solid #2e7d32;
 }
 
 /* main content */
@@ -810,7 +990,15 @@ footer {
     color: white !important;
 }
 
+/* Ẩn danh sách section nếu chưa được toggle */
+.sidebar input[type="checkbox"] + label + ul {
+  display: none;
+}
 
+/* Khi checkbox được checked, hiện danh sách section */
+.sidebar input[type="checkbox"]:checked + label + ul {
+  display: block;
+}
             </style>
         </head>
         <body>
@@ -820,416 +1008,407 @@ footer {
                 </header>
                 <div class="content-wrapper">
                     <aside class="sidebar">
-    <h2>Chapters</h2>
+  <h2>Chapters</h2>
+<ul>
+    <!-- Chapter 1 -->
+    <li>
+        <input type="checkbox" id="ch1" hidden checked>
+        <label for="ch1">Chapter 1</label>
+        <ul>
+            <!-- Section 1 -->
+            <li>
+               
+                <label for="ch1sec1"><span>1.1. Section</span></label>
+                <ul>
+                    <li><a href="#1.1.1">1.1.1. Subsection</a></li>
+                    <li><a href="#1.1.2">1.1.2. Subsection</a></li>
+                    <li><a href="#1.1.3">1.1.3. Subsection</a></li>
+                </ul>
+            </li>
+            <!-- Section 2 -->
+            <li>
+                
+                <label for="ch1sec2"><span>1.2. Section</span></label>
+                <ul>
+                    <li><a href="#1.2.1">1.2.1. Subsection</a></li>
+                    <li><a href="#1.2.2">1.2.2. Subsection</a></li>
+                    <li><a href="#1.2.3">1.2.3. Subsection</a></li>
+                </ul>
+            </li>
+            <!-- Section 3 -->
+            <li>
+                
+                <label for="ch1sec3"><span>1.3. Section</span></label>
+                <ul>
+                    <li><a href="#1.3.1">1.3.1. Subsection</a></li>
+                    <li><a href="#1.3.2">1.3.2. Subsection</a></li>
+                    <li><a href="#1.3.3">1.3.3. Subsection</a></li>
+                </ul>
+            </li>
+            <!-- Section 4 -->
+            <li>
+                
+                <label for="ch1sec4"><span>1.4. Section</span></label>
+                <ul>
+                    <li><a href="#1.4.1">1.4.1. Subsection</a></li>
+                    <li><a href="#1.4.2">1.4.2. Subsection</a></li>
+                    <li><a href="#1.4.3">1.4.3. Subsection</a></li>
+                </ul>
+            </li>
+            <!-- Section 5 -->
+            <li>
+            
+                <label for="ch1sec5"><span>1.5. Section</span></label>
+                <ul>
+                    <li><a href="#1.5.1">1.5.1. Subsection</a></li>
+                    <li><a href="#1.5.2">1.5.2. Subsection</a></li>
+                    <li><a href="#1.5.3">1.5.3. Subsection</a></li>
+                </ul>
+            </li>
+            <!-- Section 6 -->
+            <li>
+             
+                <label for="ch1sec6"><span>1.6. Section</span></label>
+                <ul>
+                    <li><a href="#1.6.1">1.6.1. Subsection</a></li>
+                    <li><a href="#1.6.2">1.6.2. Subsection</a></li>
+                    <li><a href="#1.6.3">1.6.3. Subsection</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+
+    <li>
+    <input type="checkbox" id="ch2" hidden checked>
+    <label for="ch2">Chapter 2</label>
     <ul>
-        <!-- Chapter 1 -->
+        <!-- Section 1 -->
         <li>
-            <input type="checkbox" id="ch1" hidden checked>
-            <label for="ch1">Chapter 1: Introduction</label>
+         
+            <label for="ch2sec1"><span>2.1. Section</span></label>
             <ul>
-                <!-- Section 1 -->
-                <li>
-                    <input type="checkbox" id="ch1sec1" hidden checked>
-                    <label for="ch1sec1">1.1 Section</label>
-                    <ul>
-                        <li>1.1.1 Subsection</li>
-                        <li>1.1.2 Subsection</li>
-                        <li>1.1.3 Subsection</li>
-                    </ul>
-                </li>
-                <!-- Section 2 -->
-                <li>
-                    <input type="checkbox" id="ch1sec2" hidden checked>
-                    <label for="ch1sec2">1.2 Section</label>
-                    <ul>
-                        <li>1.2.1 Subsection</li>
-                        <li>1.2.2 Subsection</li>
-                        <li>1.2.3 Subsection</li>
-                    </ul>
-                </li>
-<!-- Section 3 -->
-                <li>
-                    <input type="checkbox" id="ch1sec3" hidden checked>
-                    <label for="ch1sec3">1.3 Section</label>
-                    <ul>
-                        <li>1.3.1 Subsection</li>
-                        <li>1.3.2 Subsection</li>
-                        <li>1.3.3 Subsection</li>
-                    </ul>
-                </li>
-      <!-- Section 4 -->
-                <li>
-                    <input type="checkbox" id="ch1sec4" hidden checked>
-                    <label for="ch1sec4">1.4 Section</label>
-                    <ul>
-                        <li>1.4.1 Subsection</li>
-                        <li>1.4.2 Subsection</li>
-                        <li>1.4.3 Subsection</li>
-                    </ul>
-                </li>      
-<!-- Section 5 -->
-                <li>
-                    <input type="checkbox" id="ch1sec5" hidden checked>
-                    <label for="ch1sec5">1.5 Section</label>
-                    <ul>
-                        <li>1.5.1 Subsection</li>
-                        <li>1.5.2 Subsection</li>
-                        <li>1.5.3 Subsection</li>
-                    </ul>
-                </li>
-<!-- Section 6 -->
-                <li>
-                    <input type="checkbox" id="ch1sec6" hidden checked>
-                    <label for="ch1sec6">1.6 Section</label>
-                    <ul>
-                        <li>1.6.1 Subsection</li>
-                        <li>1.6.2 Subsection</li>
-                        <li>1.6.3 Subsection</li>
-                    </ul>
-                </li>
-
-         </ul>
-        </li>
-
-        <!-- Bạn tiếp tục nhân bản block này cho Chapter 2 -->
- <li>
-            <input type="checkbox" id="ch2" hidden checked>
-            <label for="ch2">Chapter 2</label>
-            <ul>
-                <!-- Section 1 -->
-                <li>
-                    <input type="checkbox" id="ch2sec1" hidden checked>
-                    <label for="ch2sec1">2.1 Section</label>
-                    <ul>
-                        <li>2.1.1 Subsection</li>
-                        <li>2.1.2 Subsection</li>
-                        <li>2.1.3 Subsection</li>
-                    </ul>
-                </li>
-                <!-- Section 2 -->
-                <li>
-                    <input type="checkbox" id="ch2sec2" hidden checked>
-                    <label for="ch2sec2">2.2 Section</label>
-                    <ul>
-                        <li>2.2.1 Subsection</li>
-                        <li>2.2.2 Subsection</li>
-                        <li>2.2.3 Subsection</li>
-                    </ul>
-                </li>
-<!-- Section 3 -->
-                <li>
-                    <input type="checkbox" id="ch2sec3" hidden checked>
-                    <label for="ch2sec3">2.3 Section</label>
-                    <ul>
-                        <li>2.3.1 Subsection</li>
-                        <li>2.3.2 Subsection</li>
-                        <li>2.3.3 Subsection</li>
-                    </ul>
-                </li>
-<!-- Section 4 -->
-                <li>
-                    <input type="checkbox" id="ch2sec4" hidden checked>
-                    <label for="ch2sec4">2.4 Section</label>
-                    <ul>
-                        <li>2.4.1 Subsection</li>
-                        <li>2.4.2 Subsection</li>
-                        <li>2.4.3 Subsection</li>
-                    </ul>
-                </li>
-<!-- Section 5 -->
-                <li>
-                    <input type="checkbox" id="ch2sec5" hidden checked>
-                    <label for="ch2sec5">2.5 Section</label>
-                    <ul>
-                        <li>2.5.1 Subsection</li>
-                        <li>2.5.2 Subsection</li>
-                        <li>2.5.3 Subsection</li>
-                    </ul>
-                </li>
-<!-- Section 6 -->
-                <li>
-                    <input type="checkbox" id="ch2sec6" hidden checked>
-                    <label for="ch2sec6">2.6 Section</label>
-                    <ul>
-                        <li>2.6.1 Subsection</li>
-                        <li>2.6.2 Subsection</li>
-                        <li>2.6.3 Subsection</li>
-                    </ul>
-                </li>
+                <li><a href="#2.1.1">2.1.1. Subsection</a></li>
+                <li><a href="#2.1.2">2.1.2. Subsection</a></li>
+                <li><a href="#2.1.3">2.1.3. Subsection</a></li>
             </ul>
         </li>
-<!-- Chapter 3 -->
+        <!-- Section 2 -->
+        <li>
+            
+            <label for="ch2sec2"><span>2.2. Section</span></label>
+            <ul>
+                <li><a href="#2.2.1">2.2.1. Subsection</a></li>
+                <li><a href="#2.2.2">2.2.2. Subsection</a></li>
+                <li><a href="#2.2.3">2.2.3. Subsection</a></li>
+            </ul>
+        </li>
+        <!-- Section 3 -->
+        <li>
+        
+            <label for="ch2sec3"><span>2.3. Section</span></label>
+            <ul>
+                <li><a href="#2.3.1">2.3.1. Subsection</a></li>
+                <li><a href="#2.3.2">2.3.2. Subsection</a></li>
+                <li><a href="#2.3.3">2.3.3. Subsection</a></li>
+            </ul>
+        </li>
+        <!-- Section 4 -->
+        <li>
+        
+            <label for="ch2sec4"><span>2.4. Section</span></label>
+            <ul>
+                <li><a href="#2.4.1">2.4.1. Subsection</a></li>
+                <li><a href="#2.4.2">2.4.2. Subsection</a></li>
+                <li><a href="#2.4.3">2.4.3. Subsection</a></li>
+            </ul>
+        </li>
+        <!-- Section 5 -->
+        <li>
+       
+            <label for="ch2sec5"><span>2.5. Section</span></label>
+            <ul>
+                <li><a href="#2.5.1">2.5.1. Subsection</a></li>
+                <li><a href="#2.5.2">2.5.2. Subsection</a></li>
+                <li><a href="#2.5.3">2.5.3. Subsection</a></li>
+            </ul>
+        </li>
+        <!-- Section 6 -->
+        <li>
+           
+            <label for="ch2sec6"><span>2.6. Section</span></label>
+            <ul>
+                <li><a href="#2.6.1">2.6.1. Subsection</a></li>
+                <li><a href="#2.6.2">2.6.2. Subsection</a></li>
+                <li><a href="#2.6.3">2.6.3. Subsection</a></li>
+            </ul>
+        </li>
+    </ul>
+</li>
+
 <li>
     <input type="checkbox" id="ch3" hidden checked>
     <label for="ch3">Chapter 3</label>
     <ul>
         <!-- Section 1 -->
         <li>
-            <input type="checkbox" id="ch3sec1" hidden checked>
-            <label for="ch3sec1">3.1 Section</label>
+       
+            <label for="ch3sec1"><span>3.1. Section</span></label>
             <ul>
-                <li>3.1.1 Subsection</li>
-                <li>3.1.2 Subsection</li>
-                <li>3.1.3 Subsection</li>
+                <li><a href="#3.1.1">3.1.1. Subsection</a></li>
+                <li><a href="#3.1.2">3.1.2. Subsection</a></li>
+                <li><a href="#3.1.3">3.1.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 2 -->
         <li>
-            <input type="checkbox" id="ch3sec2" hidden checked>
-            <label for="ch3sec2">3.2 Section</label>
+                <label for="ch3sec2"><span>3.2. Section</span></label>
             <ul>
-                <li>3.2.1 Subsection</li>
-                <li>3.2.2 Subsection</li>
-                <li>3.2.3 Subsection</li>
+                <li><a href="#3.2.1">3.2.1. Subsection</a></li>
+                <li><a href="#3.2.2">3.2.2. Subsection</a></li>
+                <li><a href="#3.2.3">3.2.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 3 -->
         <li>
-            <input type="checkbox" id="ch3sec3" hidden checked>
-            <label for="ch3sec3">3.3 Section</label>
+           
+            <label for="ch3sec3"><span>3.3. Section</span></label>
             <ul>
-                <li>3.3.1 Subsection</li>
-                <li>3.3.2 Subsection</li>
-                <li>3.3.3 Subsection</li>
+                <li><a href="#3.3.1">3.3.1. Subsection</a></li>
+                <li><a href="#3.3.2">3.3.2. Subsection</a></li>
+                <li><a href="#3.3.3">3.3.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 4 -->
         <li>
-            <input type="checkbox" id="ch3sec4" hidden checked>
-            <label for="ch3sec4">3.4 Section</label>
+          
+            <label for="ch3sec4"><span>3.4. Section</span></label>
             <ul>
-                <li>3.4.1 Subsection</li>
-                <li>3.4.2 Subsection</li>
-                <li>3.4.3 Subsection</li>
+                <li><a href="#3.4.1">3.4.1. Subsection</a></li>
+                <li><a href="#3.4.2">3.4.2. Subsection</a></li>
+                <li><a href="#3.4.3">3.4.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 5 -->
         <li>
-            <input type="checkbox" id="ch3sec5" hidden checked>
-            <label for="ch3sec5">3.5 Section</label>
+            
+            <label for="ch3sec5"><span>3.5. Section</span></label>
             <ul>
-                <li>3.5.1 Subsection</li>
-                <li>3.5.2 Subsection</li>
-                <li>3.5.3 Subsection</li>
+                <li><a href="#3.5.1">3.5.1. Subsection</a></li>
+                <li><a href="#3.5.2">3.5.2. Subsection</a></li>
+                <li><a href="#3.5.3">3.5.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 6 -->
         <li>
-            <input type="checkbox" id="ch3sec6" hidden checked>
-            <label for="ch3sec6">3.6 Section</label>
+            
+            <label for="ch3sec6"><span>3.6. Section</span></label>
             <ul>
-                <li>3.6.1 Subsection</li>
-                <li>3.6.2 Subsection</li>
-                <li>3.6.3 Subsection</li>
+                <li><a href="#3.6.1">3.6.1. Subsection</a></li>
+                <li><a href="#3.6.2">3.6.2. Subsection</a></li>
+                <li><a href="#3.6.3">3.6.3. Subsection</a></li>
             </ul>
         </li>
     </ul>
 </li>
-
-<!-- Chapter 4 -->
 <li>
     <input type="checkbox" id="ch4" hidden checked>
     <label for="ch4">Chapter 4</label>
     <ul>
         <!-- Section 1 -->
         <li>
-            <input type="checkbox" id="ch4sec1" hidden checked>
-            <label for="ch4sec1">4.1 Section</label>
+            
+            <label for="ch4sec1"><span>4.1. Section</span></label>
             <ul>
-                <li>4.1.1 Subsection</li>
-                <li>4.1.2 Subsection</li>
-                <li>4.1.3 Subsection</li>
+                <li><a href="#4.1.1">4.1.1. Subsection</a></li>
+                <li><a href="#4.1.2">4.1.2. Subsection</a></li>
+                <li><a href="#4.1.3">4.1.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 2 -->
         <li>
-            <input type="checkbox" id="ch4sec2" hidden checked>
-            <label for="ch4sec2">4.2 Section</label>
+           
+            <label for="ch4sec2"><span>4.2. Section</span></label>
             <ul>
-                <li>4.2.1 Subsection</li>
-                <li>4.2.2 Subsection</li>
-                <li>4.2.3 Subsection</li>
+                <li><a href="#4.2.1">4.2.1. Subsection</a></li>
+                <li><a href="#4.2.2">4.2.2. Subsection</a></li>
+                <li><a href="#4.2.3">4.2.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 3 -->
         <li>
-            <input type="checkbox" id="ch4sec3" hidden checked>
-            <label for="ch4sec3">4.3 Section</label>
+            
+            <label for="ch4sec3"><span>4.3. Section</span></label>
             <ul>
-                <li>4.3.1 Subsection</li>
-                <li>4.3.2 Subsection</li>
-                <li>4.3.3 Subsection</li>
+                <li><a href="#4.3.1">4.3.1. Subsection</a></li>
+                <li><a href="#4.3.2">4.3.2. Subsection</a></li>
+                <li><a href="#4.3.3">4.3.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 4 -->
         <li>
-            <input type="checkbox" id="ch4sec4" hidden checked>
-            <label for="ch4sec4">4.4 Section</label>
+           
+            <label for="ch4sec4"><span>4.4. Section</span></label>
             <ul>
-                <li>4.4.1 Subsection</li>
-                <li>4.4.2 Subsection</li>
-                <li>4.4.3 Subsection</li>
+                <li><a href="#4.4.1">4.4.1. Subsection</a></li>
+                <li><a href="#4.4.2">4.4.2. Subsection</a></li>
+                <li><a href="#4.4.3">4.4.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 5 -->
         <li>
-            <input type="checkbox" id="ch4sec5" hidden checked>
-            <label for="ch4sec5">4.5 Section</label>
+         
+            <label for="ch4sec5"><span>4.5. Section</span></label>
             <ul>
-                <li>4.5.1 Subsection</li>
-                <li>4.5.2 Subsection</li>
-                <li>4.5.3 Subsection</li>
+                <li><a href="#4.5.1">4.5.1. Subsection</a></li>
+                <li><a href="#4.5.2">4.5.2. Subsection</a></li>
+                <li><a href="#4.5.3">4.5.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 6 -->
         <li>
-            <input type="checkbox" id="ch4sec6" hidden checked>
-            <label for="ch4sec6">4.6 Section</label>
+            
+            <label for="ch4sec6"><span>4.6. Section</span></label>
             <ul>
-                <li>4.6.1 Subsection</li>
-                <li>4.6.2 Subsection</li>
-                <li>4.6.3 Subsection</li>
+                <li><a href="#4.6.1">4.6.1. Subsection</a></li>
+                <li><a href="#4.6.2">4.6.2. Subsection</a></li>
+                <li><a href="#4.6.3">4.6.3. Subsection</a></li>
             </ul>
         </li>
     </ul>
 </li>
-
-<!-- Chapter 5 -->
 <li>
     <input type="checkbox" id="ch5" hidden checked>
     <label for="ch5">Chapter 5</label>
     <ul>
         <!-- Section 1 -->
         <li>
-            <input type="checkbox" id="ch5sec1" hidden checked>
-            <label for="ch5sec1">5.1 Section</label>
+           
+            <label for="ch5sec1"><span>5.1. Section</span></label>
             <ul>
-                <li>5.1.1 Subsection</li>
-                <li>5.1.2 Subsection</li>
-                <li>5.1.3 Subsection</li>
+                <li><a href="#5.1.1">5.1.1. Subsection</a></li>
+                <li><a href="#5.1.2">5.1.2. Subsection</a></li>
+                <li><a href="#5.1.3">5.1.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 2 -->
         <li>
-            <input type="checkbox" id="ch5sec2" hidden checked>
-            <label for="ch5sec2">5.2 Section</label>
+            
+            <label for="ch5sec2"><span>5.2. Section</span></label>
             <ul>
-                <li>5.2.1 Subsection</li>
-                <li>5.2.2 Subsection</li>
-                <li>5.2.3 Subsection</li>
+                <li><a href="#5.2.1">5.2.1. Subsection</a></li>
+                <li><a href="#5.2.2">5.2.2. Subsection</a></li>
+                <li><a href="#5.2.3">5.2.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 3 -->
         <li>
-            <input type="checkbox" id="ch5sec3" hidden checked>
-            <label for="ch5sec3">5.3 Section</label>
+            
+            <label for="ch5sec3"><span>5.3. Section</span></label>
             <ul>
-                <li>5.3.1 Subsection</li>
-                <li>5.3.2 Subsection</li>
-                <li>5.3.3 Subsection</li>
+                <li><a href="#5.3.1">5.3.1. Subsection</a></li>
+                <li><a href="#5.3.2">5.3.2. Subsection</a></li>
+                <li><a href="#5.3.3">5.3.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 4 -->
         <li>
-            <input type="checkbox" id="ch5sec4" hidden checked>
-            <label for="ch5sec4">5.4 Section</label>
+            
+            <label for="ch5sec4"><span>5.4. Section</span></label>
             <ul>
-                <li>5.4.1 Subsection</li>
-                <li>5.4.2 Subsection</li>
-                <li>5.4.3 Subsection</li>
+                <li><a href="#5.4.1">5.4.1. Subsection</a></li>
+                <li><a href="#5.4.2">5.4.2. Subsection</a></li>
+                <li><a href="#5.4.3">5.4.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 5 -->
         <li>
-            <input type="checkbox" id="ch5sec5" hidden checked>
-            <label for="ch5sec5">5.5 Section</label>
+           
+            <label for="ch5sec5"><span>5.5. Section</span></label>
             <ul>
-                <li>5.5.1 Subsection</li>
-                <li>5.5.2 Subsection</li>
-                <li>5.5.3 Subsection</li>
+                <li><a href="#5.5.1">5.5.1. Subsection</a></li>
+                <li><a href="#5.5.2">5.5.2. Subsection</a></li>
+                <li><a href="#5.5.3">5.5.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 6 -->
         <li>
-            <input type="checkbox" id="ch5sec6" hidden checked>
-            <label for="ch5sec6">5.6 Section</label>
+            
+            <label for="ch5sec6"><span>5.6. Section</span></label>
             <ul>
-                <li>5.6.1 Subsection</li>
-                <li>5.6.2 Subsection</li>
-                <li>5.6.3 Subsection</li>
+                <li><a href="#5.6.1">5.6.1. Subsection</a></li>
+                <li><a href="#5.6.2">5.6.2. Subsection</a></li>
+                <li><a href="#5.6.3">5.6.3. Subsection</a></li>
             </ul>
         </li>
     </ul>
 </li>
-
-<!-- Chapter 6 -->
 <li>
     <input type="checkbox" id="ch6" hidden checked>
     <label for="ch6">Chapter 6</label>
     <ul>
         <!-- Section 1 -->
         <li>
-            <input type="checkbox" id="ch6sec1" hidden checked>
-            <label for="ch6sec1">6.1 Section</label>
+            
+            <label for="ch6sec1"><span>6.1. Section</span></label>
             <ul>
-                <li>6.1.1 Subsection</li>
-                <li>6.1.2 Subsection</li>
-                <li>6.1.3 Subsection</li>
+                <li><a href="#6.1.1">6.1.1. Subsection</a></li>
+                <li><a href="#6.1.2">6.1.2. Subsection</a></li>
+                <li><a href="#6.1.3">6.1.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 2 -->
         <li>
-            <input type="checkbox" id="ch6sec2" hidden checked>
-            <label for="ch6sec2">6.2 Section</label>
+            
+            <label for="ch6sec2"><span>6.2. Section</span></label>
             <ul>
-                <li>6.2.1 Subsection</li>
-                <li>6.2.2 Subsection</li>
-                <li>6.2.3 Subsection</li>
+                <li><a href="#6.2.1">6.2.1. Subsection</a></li>
+                <li><a href="#6.2.2">6.2.2. Subsection</a></li>
+                <li><a href="#6.2.3">6.2.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 3 -->
         <li>
-            <input type="checkbox" id="ch6sec3" hidden checked>
-            <label for="ch6sec3">6.3 Section</label>
+            
+            <label for="ch6sec3"><span>6.3. Section</span></label>
             <ul>
-                <li>6.3.1 Subsection</li>
-                <li>6.3.2 Subsection</li>
-                <li>6.3.3 Subsection</li>
+                <li><a href="#6.3.1">6.3.1. Subsection</a></li>
+                <li><a href="#6.3.2">6.3.2. Subsection</a></li>
+                <li><a href="#6.3.3">6.3.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 4 -->
         <li>
-            <input type="checkbox" id="ch6sec4" hidden checked>
-            <label for="ch6sec4">6.4 Section</label>
+            
+            <label for="ch6sec4"><span>6.4. Section</span></label>
             <ul>
-                <li>6.4.1 Subsection</li>
-                <li>6.4.2 Subsection</li>
-                <li>6.4.3 Subsection</li>
+                <li><a href="#6.4.1">6.4.1. Subsection</a></li>
+                <li><a href="#6.4.2">6.4.2. Subsection</a></li>
+                <li><a href="#6.4.3">6.4.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 5 -->
         <li>
-            <input type="checkbox" id="ch6sec5" hidden checked>
-            <label for="ch6sec5">6.5 Section</label>
+           
+            <label for="ch6sec5"><span>6.5. Section</span></label>
             <ul>
-                <li>6.5.1 Subsection</li>
-                <li>6.5.2 Subsection</li>
-                <li>6.5.3 Subsection</li>
+                <li><a href="#6.5.1">6.5.1. Subsection</a></li>
+                <li><a href="#6.5.2">6.5.2. Subsection</a></li>
+                <li><a href="#6.5.3">6.5.3. Subsection</a></li>
             </ul>
         </li>
         <!-- Section 6 -->
         <li>
-            <input type="checkbox" id="ch6sec6" hidden checked>
-            <label for="ch6sec6">6.6 Section</label>
+            
+            <label for="ch6sec6"><span>6.6. Section</span></label>
             <ul>
-                <li>6.6.1 Subsection</li>
-                <li>6.6.2 Subsection</li>
-                <li>6.6.3 Subsection</li>
+                <li><a href="#6.6.1">6.6.1. Subsection</a></li>
+                <li><a href="#6.6.2">6.6.2. Subsection</a></li>
+                <li><a href="#6.6.3">6.6.3. Subsection</a></li>
             </ul>
         </li>
     </ul>
 </li>
-    </ul>
+</ul>
 </aside>
                     <main class="main-content">
                        <!-- Prev/Next links on top -->
@@ -1237,7 +1416,7 @@ footer {
     <a href="chapter0.html">⬅ Prev Chapter</a>
     <a href="chapter2.html">Next Chapter ➡</a>
 </div>
-
+<div id="chapter-text"> 
 <h1>Welcome to My Book</h1>
 <p>
     This is a professional template for creating an interactive book-like web page. You can include chapters, detailed content, and even additional multimedia.
@@ -1245,13 +1424,12 @@ footer {
 <p>
     Use the sidebar to navigate between chapters and explore the book in an engaging and visually appealing layout.
 </p>
-
+</div>
 <!-- Prev/Next links on bottom -->
 <div class="nav-links bottom">
     <a href="chapter0.html">⬅ Prev Chapter</a>
     <a href="chapter2.html">Next Chapter ➡</a>
 </div>
-
                     </main>
                 </div>
                 <footer>
@@ -1408,7 +1586,7 @@ function loadTemplate() {
     }
 }
 
-function handleFileUpload(event) {
+/*function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
@@ -1418,13 +1596,13 @@ function handleFileUpload(event) {
         };
         reader.readAsText(file);
     }
-}
+}*/
 
 function triggerFileInput() {
     document.getElementById('upload-file').click();
 }
 
-function handleFileUpload(event) {
+/*function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
@@ -1436,7 +1614,108 @@ document.getElementById('download-button').style.display = 'none';
         };
         reader.readAsText(file);
     }
+}*/
+
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const fileName = file.name.toLowerCase();
+    const selectedTemplate = document.getElementById('template-select').value;
+    const isUsingTemplate = selectedTemplate === 'default' || selectedTemplate === 'vertical-nav';
+    const baseTemplate = templates[selectedTemplate] || '';
+
+    // Hàm chèn nội dung vào template → CKEditor
+    function insertIntoTemplate(contentHtml) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(baseTemplate, 'text/html');
+
+        const contentContainer =
+            doc.querySelector('#chapter-text') ||
+            doc.querySelector('#chapter-content-display') ||
+            doc.querySelector('.main-content') ||
+            doc.body;
+
+        contentContainer.innerHTML = contentHtml;
+
+        CKEDITOR.instances.editor.setData(doc.documentElement.outerHTML);
+        document.getElementById('template-select').value = '';
+        document.getElementById('download-button').style.display = 'none';
+    }
+
+    // 👉 Word
+    if (fileName.endsWith('.docx')) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            mammoth.convertToHtml({ arrayBuffer: e.target.result })
+                .then(function (result) {
+                    if (isUsingTemplate) {
+                        insertIntoTemplate(result.value);
+                    } else {
+                        CKEDITOR.instances.editor.setData(result.value);
+                    }
+                })
+                .catch(function (err) {
+                    alert("Lỗi khi đọc file Word: " + err.message);
+                });
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
+    // 👉 PDF
+    else if (fileName.endsWith('.pdf')) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const typedarray = new Uint8Array(e.target.result);
+            pdfjsLib.getDocument({ data: typedarray }).promise.then(function (pdf) {
+                let countPromises = [];
+
+                for (let j = 1; j <= pdf.numPages; j++) {
+                    countPromises.push(
+                        pdf.getPage(j).then(page =>
+                            page.getTextContent().then(textContent =>
+                                textContent.items.map(item => item.str).join(' ')
+                            )
+                        )
+                    );
+                }
+
+                Promise.all(countPromises).then(function (texts) {
+                    const fullText = texts.join('<br><br>');
+                    const html = `<div style="white-space: pre-line;">${fullText}</div>`;
+                    if (isUsingTemplate) {
+                        insertIntoTemplate(html);
+                    } else {
+                        CKEDITOR.instances.editor.setData(html);
+                    }
+                });
+            });
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
+    // 👉 HTML
+    else if (fileName.endsWith('.html') || fileName.endsWith('.htm')) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            // HTML luôn load vào CKEditor, không bao giờ chèn vào template
+            CKEDITOR.instances.editor.setData(e.target.result);
+            document.getElementById('template-select').value = '';
+            document.getElementById('download-button').style.display = 'none';
+        };
+        reader.readAsText(file);
+    }
+
+    // ❌ Không hợp lệ
+    else {
+        alert("Chỉ hỗ trợ .docx, .pdf và .html");
+    }
 }
+
+
+
+
+
 
 function downloadFile() {
     // Thay đổi URL này thành đường dẫn file cố định bạn muốn
@@ -1453,18 +1732,25 @@ function downloadFile() {
 
 
 function exportToHTML() {
-            var html = CKEDITOR.instances.editor.getData();
-            var blob = new Blob([html], { type: 'text/html' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'document.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
+    let html = CKEDITOR.instances.editor.getData();
 
+    // Tìm các đoạn như <!--<script ...></script>--> và chỉ loại bỏ <!-- và -->
+    html = html.replace(/<!--\s*(<script[\s\S]*?<\/script>)\s*-->/g, '$1');
+
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'document.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
 
     </script>
+
+<script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+
 </body>
 </html>
