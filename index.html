@@ -148,6 +148,84 @@
     background-repeat: no-repeat !important;
     background-position: center center !important;
 }
+.toolbar {
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.toolbar > div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.toolbar label {
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.toolbar input[type="number"] {
+  padding: 0.4rem;
+  font-size: 0.85rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  width: 60px;
+  text-align: center;
+  background-color: white;
+}
+
+.toolbar button {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.toolbar button:hover {
+  background-color: var(--button-hover);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.toolbar select {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  background-color: #fff;
+  color: var(--text-color);
+}
+.chapter-inputs {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.chapter-inputs label {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.chapter-inputs input[type="number"] {
+  padding: 0.35rem;
+  font-size: 0.85rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  width: 60px;
+  text-align: center;
+  background-color: white;
+}
 
   </style>
 </head>
@@ -159,19 +237,19 @@
     <option value=""></option>
     <option value="default">Simple Template</option>
     <option value="vertical-nav">Pro Template</option>
-  
 </select>
 <input type="file" id="upload-file" accept=".docx,.html,.pdf" style="display:none;" onchange="handleFileUpload(event)">
-
-
-
                 <button class="export-button" onclick="loadTemplate()">Load Template</button>
             </div>
 <button id="download-button" class="export-button" onclick="downloadFile()" style="display:none;">Download Script</button>
     <button class="export-button" onclick="exportToHTML()">Export to HTML</button>
 <button class="export-button" onclick="triggerFileInput()">Upload Your Files (HTML,DOCX)</button>
 <input type="file" id="upload-file" accept=".html" style="display:none;" onchange="handleFileUpload(event)">
-
+<div class="chapter-inputs">
+  <label>Chapters: <input type="number" id="num-chapters" value="3" min="1" max="10"></label>
+  <label>Sections/Chapter: <input type="number" id="num-sections" value="3" min="1" max="10"></label>
+  <label>Subsections/Section: <input type="number" id="num-subsections" value="3" min="1" max="10"></label>
+</div>
         </div>
         <div class="editor-container">
             <textarea id="editor"></textarea>
@@ -1535,55 +1613,83 @@ CKEDITOR.plugins.add('insertDocument', {
             }
         }*/
 
-/*function loadTemplate() {
-    const selectedTemplate = document.getElementById('template-select').value;
-    if (selectedTemplate && templates[selectedTemplate]) {
-        CKEDITOR.instances.editor.setData(templates[selectedTemplate]);
+function generateSidebar(chapterCount, sectionCount, subCount) {
+    let html = `<h2>Chapters</h2>\n<ul>\n`;
 
-        // Show Add Script button nếu chọn simple
-        document.getElementById('add-script-button').style.display = selectedTemplate === 'default' ? 'inline-block' : 'none';
+    for (let c = 1; c <= chapterCount; c++) {
+        html += `<li>
+    <input type="checkbox" id="ch${c}" hidden checked>
+    <label for="ch${c}">Chapter ${String(c).padStart(2, '0')}</label>
+    <ul class="section">\n`;
 
-        // Show Download button nếu chọn simple hoặc pro
-        if (selectedTemplate === 'default' || selectedTemplate === 'vertical-nav') {
-            document.getElementById('download-button').style.display = 'inline-block';
-        } else {
-            document.getElementById('download-button').style.display = 'none';
+        for (let s = 1; s <= sectionCount; s++) {
+            html += `<li>
+        <input type="checkbox" id="ch${c}-sec${s}" hidden checked>
+        <label for="ch${c}-sec${s}"><a href="#${c}.${s}">${c}.${s}. Section</a></label>
+        <ul class="subsection">\n`;
+
+            for (let ss = 1; ss <= subCount; ss++) {
+                html += `<li><a href="#${c}.${s}.${ss}">${c}.${s}.${ss}. Subsection</a></li>\n`;
+            }
+
+            html += `</ul></li>\n`;
         }
-    } else {
-        // Nếu chưa chọn template → ẩn nút
-        document.getElementById('download-button').style.display = 'none';
-    }
-}*/
-/*function loadTemplate() {
-    const selectedTemplate = document.getElementById('template-select').value;
-    const downloadBtn = document.getElementById('download-button');
 
-    if (selectedTemplate === 'default' || selectedTemplate === 'vertical-nav') {
-        CKEDITOR.instances.editor.setData(templates[selectedTemplate]);
-        downloadBtn.style.display = 'inline-block';
-    } else if (selectedTemplate === 'upload') {
-        downloadBtn.style.display = 'none';
-        document.getElementById('upload-file').click(); // Mở hộp thoại chọn file
-    } else {
-        downloadBtn.style.display = 'none';
+        html += `</ul></li>\n`;
     }
-}*/
+
+    html += `</ul>`;
+    return html;
+}
+function generateChapterText(chapterCount) {
+    let html = "";
+    for (let c = 1; c <= chapterCount; c++) {
+        html += `<h2 id="${c}">Chapter ${c}</h2>\n<p>Nội dung chương ${c} ở đây.</p>\n`;
+    }
+    return html;
+}
+
 function loadTemplate() {
     const selectedTemplate = document.getElementById('template-select').value;
     const downloadBtn = document.getElementById('download-button');
 
-    if (selectedTemplate === 'default' || selectedTemplate === 'vertical-nav') {
-        CKEDITOR.instances.editor.setData(templates[selectedTemplate]);
-        downloadBtn.style.display = 'inline-block';
-    } else if (selectedTemplate === 'upload') {
+    const numChapters = parseInt(document.getElementById('num-chapters').value, 10);
+    const numSections = parseInt(document.getElementById('num-sections').value, 10);
+    const numSubsections = parseInt(document.getElementById('num-subsections').value, 10);
+
+    if (!selectedTemplate || !templates[selectedTemplate]) {
+        CKEDITOR.instances.editor.setData('');
         downloadBtn.style.display = 'none';
-        document.getElementById('upload-file').click(); // Mở hộp thoại chọn file
-    } else if (selectedTemplate === '') {
-        // Khi chọn "Select a Template"
-        CKEDITOR.instances.editor.setData(''); // Xóa nội dung CKEditor
-        downloadBtn.style.display = 'none';
+        return;
     }
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(templates[selectedTemplate], 'text/html');
+
+    const sidebarHtml = generateSidebar(numChapters, numSections, numSubsections);
+    const chapterTextHtml = generateChapterText(numChapters);
+
+    // Chèn vào layout tương ứng
+    if (selectedTemplate === 'default') {
+        const sidebar = doc.querySelector('.chapter-sidebar');
+        const chapterText = doc.querySelector('#chapter-text');
+        if (sidebar) sidebar.innerHTML = sidebarHtml;
+        if (chapterText) chapterText.innerHTML = chapterTextHtml;
+    } else if (selectedTemplate === 'vertical-nav') {
+        const sidebar = doc.querySelector('.sidebar');
+        const chapterText = doc.querySelector('#chapter-text');
+        if (sidebar) sidebar.innerHTML = sidebarHtml;
+        if (chapterText) chapterText.innerHTML = chapterTextHtml;
+    }
+
+    CKEDITOR.instances.editor.setData(doc.documentElement.outerHTML);
+    downloadBtn.style.display = 'inline-block';
 }
+
+
+
+
+
 
 /*function handleFileUpload(event) {
     const file = event.target.files[0];
@@ -1620,14 +1726,13 @@ function handleFileUpload(event) {
     if (!file) return;
 
     const fileName = file.name.toLowerCase();
-    const selectedTemplate = document.getElementById('template-select').value;
-    const isUsingTemplate = selectedTemplate === 'default' || selectedTemplate === 'vertical-nav';
-    const baseTemplate = templates[selectedTemplate] || '';
+    const reader = new FileReader();
 
-    // Hàm chèn nội dung vào template → CKEditor
-    function insertIntoTemplate(contentHtml) {
+    // Chèn nội dung vào đúng vùng nội dung của template đang dùng
+    function updateEditorContent(contentHtml) {
+        const editor = CKEDITOR.instances.editor;
         const parser = new DOMParser();
-        const doc = parser.parseFromString(baseTemplate, 'text/html');
+        const doc = parser.parseFromString(editor.getData(), 'text/html');
 
         const contentContainer =
             doc.querySelector('#chapter-text') ||
@@ -1637,22 +1742,15 @@ function handleFileUpload(event) {
 
         contentContainer.innerHTML = contentHtml;
 
-        CKEDITOR.instances.editor.setData(doc.documentElement.outerHTML);
-        document.getElementById('template-select').value = '';
-        document.getElementById('download-button').style.display = 'none';
+        editor.setData(doc.documentElement.outerHTML);
     }
 
-    // 👉 Word
+    // Xử lý file Word
     if (fileName.endsWith('.docx')) {
-        const reader = new FileReader();
         reader.onload = function (e) {
             mammoth.convertToHtml({ arrayBuffer: e.target.result })
                 .then(function (result) {
-                    if (isUsingTemplate) {
-                        insertIntoTemplate(result.value);
-                    } else {
-                        CKEDITOR.instances.editor.setData(result.value);
-                    }
+                    updateEditorContent(result.value);
                 })
                 .catch(function (err) {
                     alert("Lỗi khi đọc file Word: " + err.message);
@@ -1661,17 +1759,15 @@ function handleFileUpload(event) {
         reader.readAsArrayBuffer(file);
     }
 
-    // 👉 PDF
+    // Xử lý file PDF
     else if (fileName.endsWith('.pdf')) {
-        const reader = new FileReader();
         reader.onload = function (e) {
             const typedarray = new Uint8Array(e.target.result);
             pdfjsLib.getDocument({ data: typedarray }).promise.then(function (pdf) {
-                let countPromises = [];
-
-                for (let j = 1; j <= pdf.numPages; j++) {
-                    countPromises.push(
-                        pdf.getPage(j).then(page =>
+                const promises = [];
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    promises.push(
+                        pdf.getPage(i).then(page =>
                             page.getTextContent().then(textContent =>
                                 textContent.items.map(item => item.str).join(' ')
                             )
@@ -1679,37 +1775,29 @@ function handleFileUpload(event) {
                     );
                 }
 
-                Promise.all(countPromises).then(function (texts) {
+                Promise.all(promises).then(function (texts) {
                     const fullText = texts.join('<br><br>');
                     const html = `<div style="white-space: pre-line;">${fullText}</div>`;
-                    if (isUsingTemplate) {
-                        insertIntoTemplate(html);
-                    } else {
-                        CKEDITOR.instances.editor.setData(html);
-                    }
+                    updateEditorContent(html);
                 });
             });
         };
         reader.readAsArrayBuffer(file);
     }
 
-    // 👉 HTML
+    // Xử lý file HTML
     else if (fileName.endsWith('.html') || fileName.endsWith('.htm')) {
-        const reader = new FileReader();
         reader.onload = function (e) {
-            // HTML luôn load vào CKEditor, không bao giờ chèn vào template
             CKEDITOR.instances.editor.setData(e.target.result);
-            document.getElementById('template-select').value = '';
-            document.getElementById('download-button').style.display = 'none';
         };
         reader.readAsText(file);
     }
 
-    // ❌ Không hợp lệ
     else {
         alert("Chỉ hỗ trợ .docx, .pdf và .html");
     }
 }
+
 
 
 
